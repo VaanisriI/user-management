@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-input-label {
+  color: #000;
+  @apply font-medium;
+  @apply text-lg;
+}
+
+.form-input {
+  @apply border h-10 border-gray-300 rounded-md focus:outline-none px-3;
+}
