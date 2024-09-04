@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../lib/AuthContext";
+import SuccessMessage from "../../common/SuccessMessage";
+import ErrorMessage from "../../common/ErrorMessage";
+import Loading from "../../common/Loading";
 
 function LoginForm({
   initialValues,
@@ -12,9 +15,6 @@ function LoginForm({
   signInApiState,
 }) {
   const navigate = useNavigate();
-
-
-  
 
   const { login, hasAuthenticated } = useAuth();
 
@@ -31,13 +31,27 @@ function LoginForm({
     }
   }, [hasAuthenticated, navigate]);
 
- 
+  if (signInApiState.loading) {
+    return <Loading />;
+  }
 
   return (
-    <div className="mx-auto min-h-screen max-w-screen-lg border md:bg-white">
+    <div className="mx-auto min-h-screen max-w-screen-lg border md:bg-white m-5">
       <div className="text-text-color mb-5 text-center font-poppins text-2xl font-semibold">
         Login
       </div>
+
+      {signInApiState.success && (
+        <SuccessMessage
+          isSuccess={signInApiState.success}
+          message={signInApiState.message}
+          timeout={3000}
+        />
+      )}
+      {signInApiState.error && (
+        <ErrorMessage message={signInApiState.message} />
+      )}
+
       <Formik
         enableReinitialize
         initialValues={initialValues}

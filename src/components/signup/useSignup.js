@@ -33,7 +33,6 @@ function getRequestPayload(values) {
 }
 
 function handleSubmitApi(values, setSubmitting, setSignupApiState, navigate) {
-
   setSubmitting(true);
   setSignupApiState({ loading: true });
   const payLoad = getRequestPayload(values);
@@ -79,7 +78,6 @@ function useSignup() {
     password: false,
   });
 
-
   return {
     handleSubmit: (values, setSubmitting) => {
       handleSubmitApi(values, setSubmitting, setSignupApiState, navigate);
@@ -88,6 +86,10 @@ function useSignup() {
     role: USER_ROLE,
     visible,
     setVisible,
+    isSuccess: signupApiState.success,
+    isError: signupApiState.error,
+    message: signupApiState.message || "",
+    isLoading: signupApiState.loading,
   };
 }
 

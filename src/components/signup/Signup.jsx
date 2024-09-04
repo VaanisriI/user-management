@@ -1,15 +1,40 @@
 import { Field, Form, Formik } from "formik";
 import useSignup from "./useSignup";
 import { Link } from "react-router-dom";
+import ErrorMessage from "../../common/ErrorMessage";
+import SuccessMessage from "../../common/SuccessMessage";
+import Loading from "../../common/Loading";
 
 export default function Signup() {
-  const { handleSubmit, initialValues, role, visible, setVisible } =
-    useSignup();
+  const {
+    handleSubmit,
+    initialValues,
+    role,
+    visible,
+    setVisible,
+    isError,
+    isSuccess,
+    message,
+    isLoading,
+  } = useSignup();
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
-    <div className="mx-auto min-h-screen max-w-screen-lg border md:bg-white">
+    <div className="mx-auto min-h-screen max-w-screen-lg border md:bg-white m-5">
       <div className="text-text-color mb-5 text-center font-poppins text-2xl font-semibold">
         User Registration
       </div>
+
+      {isSuccess && (
+        <SuccessMessage
+          isSuccess={isSuccess}
+          message={message}
+          timeout={3000}
+        />
+      )}
+      {isError && <ErrorMessage message={message} />}
 
       <Formik
         enableReinitialize
